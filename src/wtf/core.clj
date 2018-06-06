@@ -3,7 +3,8 @@
             [ring.util.response :as ring]
 	    [clojure.data.json :as json]
 	    [ring.adapter.jetty :as jetty]
-            [hiccup.page :as page]))
+            [hiccup.page :as page])
+(:gen-class))
 
 (defn wtf [x]
   (:extract (json/read-str (slurp
@@ -19,25 +20,21 @@
     [:meta {:charset "utf-8"}]
     [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge,chrome=1"}]
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1, maximum-scale=1"}]
-    [:title "WTF?"]
-    (page/include-css "base.css"
-                 "skeleton.css"
-                 "screen.css")
-    (page/include-css "http://fonts.googleapis.com/css?family=Sigmar+One&v1")]
-   [:body
-    [:div {:id "header"}
-     [:h1 {:class "container"} "WTF?"]]
-    [:div {:id "content" :class "container"} (if name
+    [:title "WTF?"]]
+   [:body {:bgcolor "#E6E6FA"}
+[:center    
+[:div {:id "header"}
+     [:h1 "WTF?"]]
+    [:h3 (if name
          (str "<form>"
               "WTF is...  <input name='name' type='text'> ? "
               "<input type='submit'>"
-              "</form><br>" (wtf name) "<img src=" (pic name) ">")
+              "</form><br>" (wtf name) "<br><br><img src=" (pic name) " width="1200">")
          (str "<form>"
-              "Name: <input name='name' type='text'>"
+              "WTF is... <input name='name' type='text'>"
               "<input type='submit'>"
-              "</form>"))]]))
+              "</form>"))]]]))
        
-
 (defn handler [{{name "name"} :params}]
   (-> (ring/response (page name))
       (ring/content-type "text/html")))
@@ -45,4 +42,10 @@
 (def app
   (-> handler params/wrap-params))
 
-(jetty/run-jetty app {:port 8080})
+(defn start [port]
+  (jetty/run-jetty app {:port port
+                          :join? false}))
+
+(defn -main []
+  (let [port (Integer/parseInt (or (System/getenv "PORT") "8080"))]
+    (start port)))
