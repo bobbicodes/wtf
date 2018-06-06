@@ -1,10 +1,9 @@
-(ns shouter.core
+(ns wtf.core
   (:require [ring.middleware.params :as params]
             [ring.util.response :as ring]
 	    [clojure.data.json :as json]
 	    [ring.adapter.jetty :as jetty]
-	    [hiccup.core :as html]
-        [hiccup.page :as page]))
+            [hiccup.page :as page]))
 
 (defn wtf [x]
   (:extract (json/read-str (slurp
