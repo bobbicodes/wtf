@@ -4,7 +4,7 @@ The "minimum viable product", or, "what's the stupidest thing I can build that's
 
 It's a stupid answer engine. You type something in and it gives you a brief definition and a picture (for most things). That's it. Go ahead, [try it.](https://dry-retreat-70804.herokuapp.com/) It's SO much stupider than Google.
 
-It simply calls the Wikipedia API and returns the description and full-res image for the query.
+SPOILER: It simply calls the Wikipedia API and returns the description and full-res image for the query.
 
 ## The entire code:
 
